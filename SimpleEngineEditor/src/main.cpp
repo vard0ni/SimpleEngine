@@ -1,12 +1,27 @@
 #include <iostream>
+#include <memory>
+#include <SimpleEngineCore/Application.hpp>
 
-#include <SimpleEngineCore/Utils/test.hpp>
+class MyApp : public SimpleEngine::Application
+{
+	// Logic for every game frame
+	virtual void on_update() override
+	{
+		std::cout << "Update frame: " << frame++ << std::endl;
+	}
+
+	int frame = 0;
+};
 
 int main()
 {
-	std::cout << "Hello from Simple Engine Editor!" << std::endl;
+	// create app
+	auto myApp = std::make_unique<MyApp>();
 
-	SimpleEngine::checkGLFW();
+	// start app
+	int returnCode = myApp->start(1024, 768, "My first App");
 
 	std::cin.get();
+
+	return returnCode;
 }
